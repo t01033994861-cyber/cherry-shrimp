@@ -1,43 +1,112 @@
-
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>대한민국 영화</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한민국 영화</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        background:linear-gradient(to bottom,#111,#333);
+        color:white;
+        font-family:Arial, sans-serif;
+        text-align:center;
+    }
+
+    header{
+        padding:70px 20px;
+    }
+
+    h1{
+        font-size:60px;
+        color:gold;
+        text-shadow:3px 3px 10px black;
+    }
+
+    h2{
+        margin-top:10px;
+        color:#ddd;
+        font-weight:normal;
+    }
+
+    nav{
+        background:#000;
+        padding:18px;
+    }
+
+    nav a{
+        color:white;
+        text-decoration:none;
+        margin:20px;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+    nav a:hover{
+        color:gold;
+    }
+
+    .main{
+        padding:50px;
+    }
+
+    .main img{
+        width:700px;
+        max-width:90%;
+        border-radius:15px;
+        box-shadow:0 0 20px black;
+    }
+
+    .main p{
+        margin-top:30px;
+        font-size:22px;
+        line-height:1.8;
+    }
+
+    footer{
+        margin-top:60px;
+        padding:20px;
+        background:#000;
+        color:#aaa;
+    }
+</style>
+
 </head>
 <body>
 
-    <h1>🎬 대한민국 영화</h1>
+<header>
+    <h1>🎬 KOREAN MOVIE</h1>
+    <h2>대한민국 영화의 모든 이야기</h2>
+</header>
+
+<nav>
+    <a href="history.html">역사</a>
+    <a href="movie.html">대표 영화</a>
+    <a href="director.html">감독</a>
+    <a href="actor.html">배우</a>
+</nav>
+
+<div class="main">
+
+    <img src="movie.jpg" alt="한국 영화">
 
     <p>
-        한국 영화의 역사와 감동을 한곳에서 만나보세요.
-        세계를 놀라게 한 명작부터 최신 인기 영화까지,
-        대한민국 영화의 다양한 이야기를 소개합니다.
+        세계를 사로잡은 한국 영화.<br>
+        감동, 액션, 스릴러, 코미디까지<br>
+        대한민국 영화의 매력을 만나보세요.
     </p>
 
-    <img src="kmovie.jpg" alt="한국 영화" width="700">
+</div>
 
-    <hr>
-
-    <h2>메뉴</h2>
-
-    <ul>
-        <li><a href="history.html">영화의 역사</a></li>
-        <li><a href="best.html">대표 영화</a></li>
-        <li><a href="director.html">유명 감독</a></li>
-        <li><a href="actor.html">대표 배우</a></li>
-    </ul>
-
-    <hr>
-
-    <p>
-        <b>"한국 영화의 매력을 지금 만나보세요!"</b>
-    </p>
+<footer>
+    © 2026 Korean Movie Website
+</footer>
 
 </body>
 </html>
-```
-
-.
-
