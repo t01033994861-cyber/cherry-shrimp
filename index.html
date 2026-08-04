@@ -1,131 +1,182 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>대한민국 영화</title>
+
+<title>KOREAN MOVIE</title>
+
 
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-    }
 
-    body{
-        background:linear-gradient(to bottom,#111,#333);
-        color:white;
-        font-family:Arial, sans-serif;
-        text-align:center;
-    }
-
-    header{
-        padding:70px 20px;
-    }
-
-    h1{
-        font-size:60px;
-        color:gold;
-        text-shadow:3px 3px 10px black;
-    }
-
-    h2{
-        margin-top:10px;
-        color:#ddd;
-        font-weight:normal;
-    }
-
-    nav{
-        background:#000;
-        padding:18px;
-    }
-
-    nav a{
-        color:white;
-        text-decoration:none;
-        margin:20px;
-        font-size:20px;
-        font-weight:bold;
-    }
-
-    nav a:hover{
-        color:gold;
-    }
-
-    .main{
-        padding:50px;
-    }
-
-    .main img{
-        width:700px;
-        max-width:90%;
-        border-radius:15px;
-        box-shadow:0 0 20px black;
-    }
-
-    .main p{
-        margin-top:30px;
-        font-size:22px;
-        line-height:1.8;
-    }
-
-    footer{
-        margin-top:60px;
-        padding:20px;
-        background:#000;
-        color:#aaa;
-    }
-</style>
-
-</head>
-<body>
-
-<header>
-    <h1>🎬 KOREAN MOVIE</h1>
-    <h2>대한민국 영화의 모든 이야기</h2>
-</header>
-
-<nav>
-    <a href="history.html">역사</a>
-    <a href="movie.html">대표 영화</a>
-    <a href="director.html">감독</a>
-    <a href="actor.html">배우</a>
-</nav>
-
-<div class="main">
-
-    <img src="movie.jpg" alt="한국 영화">
-
-    <p>
-        세계를 사로잡은 한국 영화.<br>
-        감동, 액션, 스릴러, 코미디까지<br>
-        대한민국 영화의 매력을 만나보세요.
-    </p>
-
-</div>
-
-<footer>
-    © 2026 Korean Movie Website
-</footer>
-
-</body>
-</html>
-.button-area{
-    margin-top:40px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
+
+body{
+
+    background:#050505;
+
+    color:white;
+
+    font-family:Arial, sans-serif;
+
+    text-align:center;
+
+}
+
+
+
+/* 메인 화면 */
+
+header{
+
+    height:500px;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.9)),
+    url("movie.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    padding-top:130px;
+
+}
+
+
+
+header h1{
+
+    font-size:80px;
+
+    color:#ffd700;
+
+    text-shadow:
+    0 0 10px black,
+    0 0 30px gold;
+
+}
+
+
+
+header h2{
+
+    margin-top:25px;
+
+    font-size:30px;
+
+    color:#ddd;
+
+}
+
+
+
+/* 메뉴 */
+
+nav{
+
+    background:#000;
+
+    padding:25px;
+
+}
+
+
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    margin:20px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+
+}
+
+
+
+nav a:hover{
+
+    color:#ffd700;
+
+}
+
+
+
+/* 내용 */
+
+.main{
+
+    padding:60px;
+
+}
+
+
+
+.main img{
+
+    width:700px;
+
+    max-width:90%;
+
+    border-radius:20px;
+
+    box-shadow:0 0 30px black;
+
+}
+
+
+
+.main p{
+
+    margin-top:35px;
+
+    font-size:24px;
+
+    line-height:1.8;
+
+    color:#ddd;
+
+}
+
+
+
+/* 버튼 */
+
+.button-area{
+
+    margin-top:45px;
+
+}
+
+
 
 .button-area a{
 
     display:inline-block;
 
     background:#ffd700;
+
     color:#000;
 
-    padding:15px 35px;
+    padding:18px 40px;
 
     margin:15px;
 
-    border-radius:30px;
+    border-radius:40px;
 
     font-size:22px;
 
@@ -138,12 +189,117 @@
 }
 
 
+
 .button-area a:hover{
 
     background:white;
 
     transform:scale(1.1);
 
-    box-shadow:0 0 20px gold;
+    box-shadow:0 0 25px gold;
 
 }
+
+
+
+/* 아래 */
+
+footer{
+
+    margin-top:50px;
+
+    padding:25px;
+
+    background:#000;
+
+    color:#777;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<header>
+
+<h1>🎬 KOREAN MOVIE</h1>
+
+<h2>
+대한민국 영화의 모든 이야기
+</h2>
+
+</header>
+
+
+
+<nav>
+
+<a href="history.html">역사</a>
+
+<a href="movie.html">대표 영화</a>
+
+<a href="director.html">감독</a>
+
+<a href="actor.html">배우</a>
+
+</nav>
+
+
+
+<div class="main">
+
+
+<img src="movie.jpg" alt="한국 영화">
+
+
+<p>
+
+세계를 사로잡은 한국 영화.<br>
+
+감동, 액션, 스릴러, 코미디까지<br>
+
+대한민국 영화의 매력을 만나보세요.
+
+</p>
+
+
+
+<div class="button-area">
+
+
+<a href="game.html">
+🎮 게임 시작
+</a>
+
+
+
+<a href="earthquake.html">
+🌋 지진 모델
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+© 2026 KOREAN MOVIE WEBSITE
+
+</footer>
+
+
+
+</body>
+
+</html>
