@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>USGS Magnitude 2.5+ Earthquakes, Past Day</title>
   
-  <!-- Leaflet.js CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet CSS & JS (cdnjs 고속 CDN 사용) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 
   <style>
     * {
@@ -120,12 +120,12 @@
       justify-content: space-between;
     }
 
-    /* 지도 영억 필수 스타일 설정 */
+    /* 지도 영역 */
     #map {
       flex: 1;
       height: 100vh;
       width: 100%;
-      background-color: #e5e3df; /* 기본 지도 배경색 */
+      background-color: #e5e3df;
     }
   </style>
 </head>
@@ -152,38 +152,43 @@
   <div id="map"></div>
 
   <script>
-    // 페이지 완전히 로드된 후 실행
     window.addEventListener('load', () => {
-      // 1. 지도 초기화
-      const map = L.map('map').setView([20, 0], 2);
+      // 1. 지도 생성 (초기 위치 설정)
+      const map = L.map('map', {
+        center: [20, 0],
+        zoom: 2,
+        worldCopyJump: true // 지구 동서 무한 스크롤 처리
+      });
 
-      // 표준 OpenStreetMap 타일 (가장 안정적임)
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap'
+      // 2. 신뢰성 높은 ESRI Gray 베이스맵 타일 (원본 이미지 스타일과 가장 일치)
+      const basemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16
       }).addTo(map);
 
-      // 지도 레이아웃 강제 업데이트 (점이 안 떠다니고 지도가 깨지는 것 방지)
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 200);
+      // 지도 사이즈 리셋 (렌더링 깨짐 방지)
+      setTimeout(() => { map.invalidateSize(); }, 300);
 
-      // 2. 판 경계선 로드
-      fetch('https://raw.githubusercontent.com/fraixedes/tectonicplates/master/GeoJSON/PB2002_boundaries.json')
+      // 3. 판 경계선 로드 (백업 CDN 연결)
+      const plateUrl = 'https://cdn.jsdelivr.net/gh/fraixedes/tectonicplates@master/GeoJSON/PB2002_boundaries.json';
+      
+      fetch(plateUrl)
         .then(res => res.json())
         .then(data => {
           L.geoJSON(data, {
             style: {
-              color: '#ff2222',
-              weight: 2,
+              color: '#d32f2f', // 원본 이미지의 붉은선
+              weight: 1.8,
               opacity: 0.8
             }
           }).addTo(map);
         })
-        .catch(err => console.error("판 경계선 오류:", err));
+        .catch(err => console.error("판 경계선 로딩 실패:", err));
 
-      // 3. USGS 지진 데이터 로드
-      fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
+      // 4. USGS 지진 데이터 API
+      const usgsUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson';
+
+      fetch(usgsUrl)
         .then(res => res.json())
         .then(data => {
           const features = data.features;
@@ -198,9 +203,9 @@
             const depth = eq.geometry.coordinates[2].toFixed(1) + ' km';
             const [lon, lat] = eq.geometry.coordinates;
 
-            // 지도 마커 생성
+            // 지도 위 주황색 지진 마커 생성
             const marker = L.circleMarker([lat, lon], {
-              radius: Math.max(mag * 2, 4),
+              radius: Math.max(mag * 2, 4.5),
               fillColor: '#ff9800',
               color: '#e65100',
               weight: 1,
@@ -209,13 +214,15 @@
             }).addTo(map);
 
             marker.bindPopup(`
-              <b>${place}</b><br>
-              규모: <b>${mag}</b><br>
-              시간: ${time}<br>
-              깊이: ${depth}
+              <div style="font-size:0.85rem; line-height:1.4;">
+                <b style="font-size:0.95rem;">${place}</b><br>
+                규모: <b>M ${mag}</b><br>
+                시간: ${time}<br>
+                깊이: ${depth}
+              </div>
             `);
 
-            // 사이드바 목록 생성
+            // 사이드바 엘리먼트 추가
             const li = document.createElement('li');
             li.className = 'eq-item';
             li.innerHTML = `
@@ -237,7 +244,10 @@
             listContainer.appendChild(li);
           });
         })
-        .catch(err => console.error("지진 데이터 오류:", err));
+        .catch(err => {
+          document.getElementById('eq-count').textContent = '데이터를 불러올 수 없습니다.';
+          console.error("지진 데이터 로딩 실패:", err);
+        });
     });
   </script>
 </body>
