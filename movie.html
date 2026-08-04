@@ -1,1 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+
+<meta charset="UTF-8">
+<title>대표 영화</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    background:#080808;
+    color:white;
+    font-family:Arial, sans-serif;
+
+}
+
+
+
+header{
+
+    height:330px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
+    url("images/cinema.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    text-align:center;
+
+    padding-top:90px;
+
+}
+
+
+
+header h1{
+
+    font-size:60px;
+    color:#ffd700;
+    text-shadow:0 0 20px black;
+
+}
+
+
+
+header p{
+
+    margin-top:20px;
+    font-size:23px;
+
+}
+
+
+
+.container{
+
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:35px;
+
+    padding:60px;
+
+}
+
+
+
+.card{
+
+    width:280px;
+    background:#151515;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 0 20px black;
+
+    transition:.4s;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-15px);
+
+    box-shadow:0 0 35px gold;
+
+}
+
+
+
+.card img{
+
+    width:100%;
+    height:400px;
+
+    object-fit:cover;
+
+}
+
+
+
+.card h2{
+
+    color:#ffd700;
+
+    padding:20px 20px 10px;
+
+}
+
+
+
+.card p{
+
+    padding:0 20px 30px;
+
+    color:#ccc;
+
+    line-height:1.7;
+
+}
+
+
+
+footer{
+
+    background:#000;
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🎬 KOREAN MOVIES</h1>
+
+<p>
+대한민국을 빛낸 최고의 영화들
+</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/en/5/53/Parasite_%282019_film%29.png">
+
+<h2>기생충</h2>
+
+<p>
+감독 : 봉준호<br><br>
+
+가난한 가족과 부유한 가족의 이야기를 통해
+사회 문제를 날카롭게 표현한 작품.
+아카데미 작품상을 수상한 한국 영화입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Train_to_Busan.jpg">
+
+<h2>부산행</h2>
+
+<p>
+감독 : 연상호<br><br>
+
+한국형 좀비 영화의 대표작.
+긴장감 넘치는 전개와 감동적인 이야기로
+세계적인 사랑을 받았습니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/en/2/2e/Oldboy_2003_film_poster.jpg">
+
+<h2>올드보이</h2>
+
+<p>
+감독 : 박찬욱<br><br>
+
+강렬한 연출과 독창적인 스토리로
+한국 영화의 수준을 세계에 알린 명작입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/en/6/68/The_Handmaiden_%282016_film%29.jpg">
+
+<h2>아가씨</h2>
+
+<p>
+감독 : 박찬욱<br><br>
+
+아름다운 영상미와 치밀한 이야기로
+많은 영화 팬들에게 인정받은 작품입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/en/8/8f/Extreme_Job.jpg">
+
+<h2>극한직업</h2>
+
+<p>
+감독 : 이병헌<br><br>
+
+웃음과 재미를 모두 잡은 한국 대표 코미디 영화.
+역대 흥행작 중 하나입니다.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+🎥 KOREAN MOVIE WEBSITE
+
+</footer>
+
+
+</body>
+
+</html>
