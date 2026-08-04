@@ -11,84 +11,79 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
-
 
 body{
-
-    background:#050505;
-    color:white;
-    font-family:Arial,sans-serif;
-
+background:#000;
+color:white;
+font-family:Arial,sans-serif;
 }
 
-
-/* 메인 히어로 */
 
 .hero{
 
-    height:100vh;
+height:100vh;
 
-    background:
-    linear-gradient(
-    rgba(0,0,0,.45),
-    rgba(0,0,0,.9)
-    ),
-    url("movie.jpg");
+background:
+linear-gradient(
+rgba(0,0,0,.4),
+rgba(0,0,0,.9)
+),
+url("images/movie.jpg");
 
-    background-size:cover;
-    background-position:center;
+background-size:cover;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+background-position:center;
 
-    text-align:center;
+display:flex;
 
-}
+justify-content:center;
 
+align-items:center;
 
-
-.hero h1{
-
-    font-size:90px;
-
-    color:#ffd700;
-
-    letter-spacing:5px;
-
-    animation:title 2s;
-
-    text-shadow:
-    0 0 20px gold,
-    0 0 40px black;
+text-align:center;
 
 }
 
 
 
-.hero p{
+h1{
 
-    margin-top:25px;
+font-size:80px;
 
-    font-size:28px;
+color:#ffd700;
 
-    color:#ddd;
+letter-spacing:5px;
 
-    animation:fade 2s;
+text-shadow:
+0 0 20px gold;
+
+animation:show 2s;
+
+}
+
+
+h2{
+
+margin-top:20px;
+
+font-size:30px;
+
+color:#ddd;
 
 }
 
 
 
-@keyframes title{
+@keyframes show{
 
 from{
 
 opacity:0;
+
 transform:translateY(-50px);
 
 }
@@ -96,6 +91,7 @@ transform:translateY(-50px);
 to{
 
 opacity:1;
+
 transform:translateY(0);
 
 }
@@ -104,79 +100,13 @@ transform:translateY(0);
 
 
 
-@keyframes fade{
-
-from{
-
-opacity:0;
-
-}
-
-to{
-
-opacity:1;
-
-}
-
-}
-
-
-
-/* 버튼 */
-
-.btn{
-
-display:inline-block;
-
-margin-top:40px;
-
-padding:18px 45px;
-
-border-radius:50px;
-
-background:#ffd700;
-
-color:#000;
-
-font-size:22px;
-
-font-weight:bold;
-
-text-decoration:none;
-
-transition:.4s;
-
-}
-
-
-
-.btn:hover{
-
-background:white;
-
-transform:scale(1.1);
-
-box-shadow:
-0 0 20px gold,
-0 0 40px gold;
-
-}
-
-
-
-/* 메뉴 */
-
-nav{
+.menu{
 
 position:absolute;
 
-top:0;
+top:30px;
 
 width:100%;
-
-padding:30px;
-
-background:rgba(0,0,0,.5);
 
 text-align:center;
 
@@ -184,23 +114,21 @@ text-align:center;
 
 
 
-nav a{
+.menu a{
 
 color:white;
 
 text-decoration:none;
 
-font-size:20px;
+font-size:22px;
 
-margin:25px;
-
-transition:.3s;
+margin:20px;
 
 }
 
 
 
-nav a:hover{
+.menu a:hover{
 
 color:#ffd700;
 
@@ -208,17 +136,52 @@ color:#ffd700;
 
 
 
+.button{
+
+display:inline-block;
+
+margin-top:40px;
+
+padding:18px 45px;
+
+background:#ffd700;
+
+color:black;
+
+border-radius:40px;
+
+font-size:22px;
+
+font-weight:bold;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+
+
+.button:hover{
+
+background:white;
+
+transform:scale(1.1);
+
+box-shadow:0 0 30px gold;
+
+}
+
+
 </style>
 
-
 </head>
-
 
 
 <body>
 
 
-<nav>
+<div class="menu">
 
 <a href="movie.html">대표 영화</a>
 
@@ -230,12 +193,11 @@ color:#ffd700;
 
 <a href="game.html">게임</a>
 
-</nav>
+</div>
 
 
 
-<section class="hero">
-
+<div class="hero">
 
 <div>
 
@@ -244,21 +206,22 @@ color:#ffd700;
 </h1>
 
 
-<p>
+<h2>
 대한민국 영화의 모든 이야기
-</p>
+</h2>
 
 
-<a class="btn" href="game.html">
+
+<a class="button" href="game.html">
+
 🎮 영화 게임 시작
+
 </a>
 
 
 </div>
 
-
-</section>
-
+</div>
 
 
 </body>
