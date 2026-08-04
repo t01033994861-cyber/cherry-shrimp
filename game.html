@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KOREAN MOVIE</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    background:#050505;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+
+}
+
+
+/* 대문 */
+
+header{
+
+    height:450px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9)),
+    url("movie.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    padding-top:120px;
+
+}
+
+
+header h1{
+
+    font-size:75px;
+    color:#ffd700;
+
+    text-shadow:0 0 30px gold;
+
+}
+
+
+header h2{
+
+    margin-top:20px;
+
+    font-size:30px;
+
+}
+
+
+/* 메뉴 */
+
+nav{
+
+    background:#000;
+
+    padding:25px;
+
+}
+
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    margin:20px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+
+nav a:hover{
+
+    color:gold;
+
+}
+
+
+
+/* 소개 */
+
+.main{
+
+    padding:60px;
+
+}
+
+
+.main img{
+
+    width:700px;
+
+    max-width:90%;
+
+    border-radius:20px;
+
+}
+
+
+
+.main p{
+
+    margin:30px;
+
+    font-size:23px;
+
+    line-height:1.8;
+
+}
+
+
+
+/* 버튼 */
+
+.button{
+
+    display:inline-block;
+
+    background:#ffd700;
+
+    color:black;
+
+    padding:18px 40px;
+
+    margin:15px;
+
+    border-radius:40px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+}
+
+
+
+.button:hover{
+
+    background:white;
+
+}
+
+
+
+/* 게임 */
+
+#game{
+
+    display:none;
+
+    padding:50px;
+
+}
+
+
+
+.quiz{
+
+    background:#151515;
+
+    width:80%;
+
+    max-width:700px;
+
+    margin:25px auto;
+
+    padding:30px;
+
+    border-radius:20px;
+
+}
+
+
+
+.quiz h2{
+
+    color:#ffd700;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.quiz button{
+
+    padding:12px 25px;
+
+    margin:8px;
+
+    border:none;
+
+    border-radius:20px;
+
+    cursor:pointer;
+
+}
+
+
+
+.quiz button:hover{
+
+    background:gold;
+
+}
+
+
+
+#score{
+
+    font-size:30px;
+
+    color:gold;
+
+    margin:30px;
+
+}
+
+
+
+/* footer */
+
+footer{
+
+    background:#000;
+
+    padding:30px;
+
+    color:#777;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+<header>
+
+<h1>🎬 KOREAN MOVIE</h1>
+
+<h2>대한민국 영화의 모든 이야기</h2>
+
+</header>
+
+
+
+<nav>
+
+<a href="#">역사</a>
+
+<a href="#">대표 영화</a>
+
+<a href="#">감독</a>
+
+<a href="#">배우</a>
+
+</nav>
+
+
+
+<div class="main">
+
+
+<img src="movie.jpg">
+
+
+<p>
+
+세계를 사로잡은 한국 영화.<br>
+
+감동, 액션, 스릴러, 코미디까지<br>
+
+대한민국 영화의 매력을 만나보세요.
+
+</p>
+
+
+
+<a class="button" onclick="startGame()">
+
+🎮 게임 시작
+
+</a>
+
+
+<a class="button">
+
+🌋 지진 모델
+
+</a>
+
+
+</div>
+
+
+
+
+<!-- 영화 게임 -->
+
+
+<div id="game">
+
+
+<h1>🎮 한국 영화 퀴즈</h1>
+
+
+<div class="quiz">
+
+<h2>1. 영화 '기생충'의 감독은?</h2>
+
+<button onclick="answer(1,'봉준호')">봉준호</button>
+
+<button onclick="answer(1,'박찬욱')">박찬욱</button>
+
+<button onclick="answer(1,'나홍진')">나홍진</button>
+
+</div>
+
+
+
+
+<div class="quiz">
+
+<h2>2. 좀비 영화 '부산행'의 배경은?</h2>
+
+<button onclick="answer(2,'기차')">기차</button>
+
+<button onclick="answer(2,'학교')">학교</button>
+
+<button onclick="answer(2,'병원')">병원</button>
+
+</div>
+
+
+
+
+<div class="quiz">
+
+<h2>3. '올드보이'의 감독은?</h2>
+
+<button onclick="answer(3,'박찬욱')">박찬욱</button>
+
+<button onclick="answer(3,'봉준호')">봉준호</button>
+
+<button onclick="answer(3,'김지운')">김지운</button>
+
+</div>
+
+
+
+
+<div class="quiz">
+
+<h2>4. '범죄도시'의 대표 배우는?</h2>
+
+<button onclick="answer(4,'마동석')">마동석</button>
+
+<button onclick="answer(4,'송강호')">송강호</button>
+
+<button onclick="answer(4,'황정민')">황정민</button>
+
+</div>
+
+
+
+
+<div class="quiz">
+
+<h2>5. 아카데미 작품상을 받은 한국 영화는?</h2>
+
+<button onclick="answer(5,'기생충')">기생충</button>
+
+<button onclick="answer(5,'괴물')">괴물</button>
+
+<button onclick="answer(5,'밀정')">밀정</button>
+
+</div>
+
+
+
+<h2 id="score"></h2>
+
+
+<button class="button" onclick="result()">
+
+🏆 점수 확인
+
+</button>
+
+
+
+</div>
+
+
+
+
+<footer>
+
+© 2026 KOREAN MOVIE WEBSITE
+
+</footer>
+
+
+
+<script>
+
+
+let point=0;
+
+let done=[];
+
+
+
+function startGame(){
+
+document.querySelector(".main").style.display="none";
+
+document.getElementById("game").style.display="block";
+
+}
+
+
+
+function answer(num,value){
+
+
+let correct={
+
+1:"봉준호",
+
+2:"기차",
+
+3:"박찬욱",
+
+4:"마동석",
+
+5:"기생충"
+
+};
+
+
+if(value==correct[num] && !done[num]){
+
+point++;
+
+done[num]=true;
+
+alert("정답입니다 🎉");
+
+}
+
+else{
+
+alert("틀렸습니다 😢");
+
+}
+
+
+}
+
+
+
+function result(){
+
+document.getElementById("score").innerHTML=
+
+"최종 점수 : "+point+" / 5";
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
