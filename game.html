@@ -1,253 +1,107 @@
-<!-- 영화 퀴즈 게임 -->
+<!DOCTYPE html>
+<html lang="ko">
 
-<div id="game">
+<head>
 
-<h1>🎬 KOREAN MOVIE QUIZ</h1>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<p>
-한국 영화 마스터에 도전하세요!
-</p>
+<title>KOREAN MOVIE</title>
 
+<style>
 
-<div class="quiz">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<h2>1. 영화 '기생충'의 감독은?</h2>
 
-<button onclick="check(1,'봉준호')">봉준호</button>
-<button onclick="check(1,'박찬욱')">박찬욱</button>
-<button onclick="check(1,'나홍진')">나홍진</button>
+body{
 
-</div>
-
-
-
-<div class="quiz">
-
-<h2>2. 영화 '부산행'의 주제는?</h2>
-
-<button onclick="check(2,'좀비')">좀비</button>
-<button onclick="check(2,'우주')">우주</button>
-<button onclick="check(2,'전쟁')">전쟁</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>3. 영화 '올드보이' 감독은?</h2>
-
-<button onclick="check(3,'박찬욱')">박찬욱</button>
-<button onclick="check(3,'봉준호')">봉준호</button>
-<button onclick="check(3,'류승완')">류승완</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>4. '범죄도시'의 주연 배우는?</h2>
-
-<button onclick="check(4,'마동석')">마동석</button>
-<button onclick="check(4,'송강호')">송강호</button>
-<button onclick="check(4,'이병헌')">이병헌</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>5. 영화 '신세계'의 장르는?</h2>
-
-<button onclick="check(5,'범죄')">범죄</button>
-<button onclick="check(5,'공포')">공포</button>
-<button onclick="check(5,'애니메이션')">애니메이션</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>6. 영화 '극한직업'의 특징은?</h2>
-
-<button onclick="check(6,'코미디')">코미디</button>
-<button onclick="check(6,'SF')">SF</button>
-<button onclick="check(6,'역사')">역사</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>7. 영화 '아가씨' 감독은?</h2>
-
-<button onclick="check(7,'박찬욱')">박찬욱</button>
-<button onclick="check(7,'김지운')">김지운</button>
-<button onclick="check(7,'나홍진')">나홍진</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>8. 영화 '베테랑'의 주연 배우는?</h2>
-
-<button onclick="check(8,'황정민')">황정민</button>
-<button onclick="check(8,'하정우')">하정우</button>
-<button onclick="check(8,'공유')">공유</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>9. 영화 '괴물' 감독은?</h2>
-
-<button onclick="check(9,'봉준호')">봉준호</button>
-<button onclick="check(9,'박찬욱')">박찬욱</button>
-<button onclick="check(9,'류승완')">류승완</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>10. 아카데미 작품상을 받은 한국 영화는?</h2>
-
-<button onclick="check(10,'기생충')">기생충</button>
-<button onclick="check(10,'밀양')">밀양</button>
-<button onclick="check(10,'설국열차')">설국열차</button>
-
-</div>
-
-
-
-
-<h2 id="score"></h2>
-
-
-<button class="button" onclick="showResult()">
-🏆 결과 확인
-</button>
-
-
-</div>
-let score=0;
-
-let answered=[];
-
-
-let answerList={
-
-1:"봉준호",
-2:"좀비",
-3:"박찬욱",
-4:"마동석",
-5:"범죄",
-6:"코미디",
-7:"박찬욱",
-8:"황정민",
-9:"봉준호",
-10:"기생충"
-
-};
-
-
-
-function check(num,value){
-
-
-if(answered[num]){
-
-alert("이미 푼 문제입니다!");
-
-return;
+    background:#050505;
+    color:white;
+    font-family:Arial,sans-serif;
 
 }
 
 
-if(answerList[num]==value){
+/* 메인 히어로 */
 
-score++;
+.hero{
 
-alert("🎉 정답입니다!");
+    height:100vh;
 
-}
+    background:
+    linear-gradient(
+    rgba(0,0,0,.45),
+    rgba(0,0,0,.9)
+    ),
+    url("movie.jpg");
 
+    background-size:cover;
+    background-position:center;
 
-else{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-alert("😢 오답입니다!");
+    text-align:center;
 
 }
 
 
 
-answered[num]=true;
+.hero h1{
 
+    font-size:90px;
 
-}
+    color:#ffd700;
 
+    letter-spacing:5px;
 
+    animation:title 2s;
 
-function showResult(){
-
-
-let grade;
-
-
-if(score==10){
-
-grade="🏆 한국 영화 마스터";
-
-}
-
-else if(score>=7){
-
-grade="⭐ 영화 전문가";
-
-}
-
-else if(score>=4){
-
-grade="🎬 영화 팬";
-
-}
-
-else{
-
-grade="🎞 초보 관객";
+    text-shadow:
+    0 0 20px gold,
+    0 0 40px black;
 
 }
 
 
 
-document.getElementById("score").innerHTML=
+.hero p{
 
-"점수 : "+score+" / 10<br>"+grade;
+    margin-top:25px;
 
+    font-size:28px;
+
+    color:#ddd;
+
+    animation:fade 2s;
 
 }
-.quiz{
 
-animation:fade 0.8s;
+
+
+@keyframes title{
+
+from{
+
+opacity:0;
+transform:translateY(-50px);
 
 }
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
 
 
 @keyframes fade{
@@ -256,27 +110,157 @@ from{
 
 opacity:0;
 
-transform:translateY(30px);
-
 }
 
 to{
 
 opacity:1;
 
-transform:translateY(0);
-
 }
 
 }
 
 
-.quiz:hover{
 
-box-shadow:0 0 40px gold;
+/* 버튼 */
 
-transform:scale(1.03);
+.btn{
+
+display:inline-block;
+
+margin-top:40px;
+
+padding:18px 45px;
+
+border-radius:50px;
+
+background:#ffd700;
+
+color:#000;
+
+font-size:22px;
+
+font-weight:bold;
+
+text-decoration:none;
+
+transition:.4s;
+
+}
+
+
+
+.btn:hover{
+
+background:white;
+
+transform:scale(1.1);
+
+box-shadow:
+0 0 20px gold,
+0 0 40px gold;
+
+}
+
+
+
+/* 메뉴 */
+
+nav{
+
+position:absolute;
+
+top:0;
+
+width:100%;
+
+padding:30px;
+
+background:rgba(0,0,0,.5);
+
+text-align:center;
+
+}
+
+
+
+nav a{
+
+color:white;
+
+text-decoration:none;
+
+font-size:20px;
+
+margin:25px;
 
 transition:.3s;
 
 }
+
+
+
+nav a:hover{
+
+color:#ffd700;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<nav>
+
+<a href="movie.html">대표 영화</a>
+
+<a href="actor.html">배우</a>
+
+<a href="director.html">감독</a>
+
+<a href="history.html">역사</a>
+
+<a href="game.html">게임</a>
+
+</nav>
+
+
+
+<section class="hero">
+
+
+<div>
+
+<h1>
+🎬 KOREAN MOVIE
+</h1>
+
+
+<p>
+대한민국 영화의 모든 이야기
+</p>
+
+
+<a class="btn" href="game.html">
+🎮 영화 게임 시작
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+</body>
+
+</html>
