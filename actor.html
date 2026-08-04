@@ -1,11 +1,240 @@
-project
-│
-├─ index.html
-├─ actor.html
-│
-└─ images
-   ├─ songkangho.jpg
-   ├─ jeondoyeon.jpg
-   ├─ leebyunghun.jpg
-   ├─ hwangjungmin.jpg
-   └─ madongseok.jpg
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>대한민국 대표 배우</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#080808;
+    color:white;
+    font-family:Arial, sans-serif;
+}
+
+
+header{
+    height:300px;
+    background:
+    linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.9)),
+    url("images/movie.jpg");
+
+    background-size:cover;
+    text-align:center;
+    padding-top:80px;
+}
+
+
+header h1{
+    font-size:55px;
+    color:#ffd700;
+    text-shadow:0 0 20px black;
+}
+
+
+header p{
+    margin-top:20px;
+    font-size:22px;
+    color:#ddd;
+}
+
+
+.container{
+
+    width:90%;
+    margin:50px auto;
+
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+
+}
+
+
+
+.card{
+
+    width:280px;
+    background:#151515;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 0 20px #000;
+    transition:0.4s;
+
+}
+
+
+.card:hover{
+
+    transform:translateY(-15px);
+    box-shadow:0 0 30px gold;
+
+}
+
+
+
+.card img{
+
+    width:100%;
+    height:350px;
+    object-fit:cover;
+
+}
+
+
+.card h2{
+
+    color:#ffd700;
+    margin:20px;
+
+}
+
+
+.card p{
+
+    padding:0 20px 25px;
+    line-height:1.7;
+    color:#ccc;
+
+}
+
+
+
+footer{
+
+    text-align:center;
+    padding:30px;
+    background:#000;
+    color:#777;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🎭 KOREAN ACTORS</h1>
+
+<p>
+대한민국 영화의 역사를 만든 배우들
+</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+
+<div class="card">
+
+<img src="images/songkangho.jpg">
+
+<h2>송강호</h2>
+
+<p>
+대표작 : 기생충, 변호인, 택시운전사<br><br>
+섬세한 감정 연기와 깊이 있는 표현력으로
+한국 영화를 대표하는 배우입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="images/jeondoyeon.jpg">
+
+<h2>전도연</h2>
+
+<p>
+대표작 : 밀양, 너는 내 운명<br><br>
+칸 영화제 여우주연상을 수상한
+대한민국 최고의 연기파 배우입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="images/leebyunghun.jpg">
+
+<h2>이병헌</h2>
+
+<p>
+대표작 : 내부자들, 광해, 달콤한 인생<br><br>
+강렬한 카리스마와 폭넓은 연기력을 가진 배우입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="images/hwangjungmin.jpg">
+
+<h2>황정민</h2>
+
+<p>
+대표작 : 신세계, 베테랑, 국제시장<br><br>
+현실적인 연기와 몰입감으로 사랑받는 배우입니다.
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<img src="images/madongseok.jpg">
+
+<h2>마동석</h2>
+
+<p>
+대표작 : 범죄도시, 부산행<br><br>
+강렬한 액션과 독특한 캐릭터로
+한국 액션 영화의 아이콘입니다.
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+<footer>
+
+© 2026 KOREAN MOVIE
+
+</footer>
+
+
+</body>
+
+</html>
