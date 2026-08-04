@@ -1,211 +1,575 @@
-<!-- 영화 퀴즈 게임 -->
+<!DOCTYPE html>
+<html lang="ko">
 
-<div id="game">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KOREAN MOVIE QUIZ</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    background:
+    linear-gradient(
+    rgba(0,0,0,.8),
+    rgba(0,0,0,.95)
+    ),
+    url("movie.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    color:white;
+    font-family:Arial,sans-serif;
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+
+/* 게임 박스 */
+
+.game-box{
+
+    width:90%;
+    max-width:750px;
+
+    background:rgba(20,20,20,.95);
+
+    padding:40px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:
+    0 0 30px black,
+    0 0 40px rgba(255,215,0,.3);
+
+    animation:show .8s;
+
+}
+
+
+
+@keyframes show{
+
+from{
+
+opacity:0;
+
+transform:translateY(50px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+h1{
+
+    color:#ffd700;
+
+    font-size:45px;
+
+    text-shadow:0 0 20px gold;
+
+}
+
+
+.subtitle{
+
+    margin:15px;
+
+    color:#ddd;
+
+}
+
+
+
+/* 진행 */
+
+.progress{
+
+    margin:20px 0;
+
+    height:15px;
+
+    background:#333;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:#ffd700;
+
+    transition:.5s;
+
+}
+
+
+
+.info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:20px;
+
+    color:#ffd700;
+
+}
+
+
+
+/* 문제 */
+
+.question{
+
+    font-size:28px;
+
+    margin:30px 0;
+
+}
+
+
+
+/* 버튼 */
+
+.answer-btn{
+
+    width:80%;
+
+    padding:15px;
+
+    margin:10px;
+
+    border:none;
+
+    border-radius:30px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.answer-btn:hover{
+
+    background:#ffd700;
+
+    transform:scale(1.05);
+
+}
+
+
+
+.correct{
+
+    background:#00a651 !important;
+
+    color:white;
+
+}
+
+
+
+.wrong{
+
+    background:#c40000 !important;
+
+    color:white;
+
+}
+
+
+
+/* 결과 */
+
+.result{
+
+    display:none;
+
+}
+
+
+
+.result h2{
+
+    color:#ffd700;
+
+    font-size:35px;
+
+    margin:20px;
+
+}
+
+
+
+.restart{
+
+    background:#ffd700;
+
+    padding:15px 40px;
+
+    border-radius:30px;
+
+    border:none;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+.restart:hover{
+
+    background:white;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div class="game-box">
+
 
 <h1>🎬 KOREAN MOVIE QUIZ</h1>
 
-<p>
+
+<p class="subtitle">
 한국 영화 마스터에 도전하세요!
 </p>
 
 
-<div class="quiz">
-
-<h2>1. 영화 '기생충'의 감독은?</h2>
-
-<button onclick="check(1,'봉준호')">봉준호</button>
-<button onclick="check(1,'박찬욱')">박찬욱</button>
-<button onclick="check(1,'나홍진')">나홍진</button>
-
-</div>
+<div id="quiz">
 
 
+<div class="info">
 
-<div class="quiz">
+<span id="number">
+문제 1 / 10
+</span>
 
-<h2>2. 영화 '부산행'의 주제는?</h2>
 
-<button onclick="check(2,'좀비')">좀비</button>
-<button onclick="check(2,'우주')">우주</button>
-<button onclick="check(2,'전쟁')">전쟁</button>
+<span>
+⭐ 점수 : <span id="score">0</span>
+</span>
 
 </div>
 
 
 
+<div class="progress">
 
-<div class="quiz">
-
-<h2>3. 영화 '올드보이' 감독은?</h2>
-
-<button onclick="check(3,'박찬욱')">박찬욱</button>
-<button onclick="check(3,'봉준호')">봉준호</button>
-<button onclick="check(3,'류승완')">류승완</button>
+<div class="progress-bar" id="bar"></div>
 
 </div>
 
 
 
+<h2 class="question" id="question">
 
-<div class="quiz">
+</h2>
 
-<h2>4. '범죄도시'의 주연 배우는?</h2>
 
-<button onclick="check(4,'마동석')">마동석</button>
-<button onclick="check(4,'송강호')">송강호</button>
-<button onclick="check(4,'이병헌')">이병헌</button>
+
+<div id="answers">
+
+</div>
+
 
 </div>
 
 
 
 
-<div class="quiz">
-
-<h2>5. 영화 '신세계'의 장르는?</h2>
-
-<button onclick="check(5,'범죄')">범죄</button>
-<button onclick="check(5,'공포')">공포</button>
-<button onclick="check(5,'애니메이션')">애니메이션</button>
-
-</div>
+<div class="result" id="result">
 
 
+<h2>🏆 결과 발표</h2>
 
 
-<div class="quiz">
-
-<h2>6. 영화 '극한직업'의 특징은?</h2>
-
-<button onclick="check(6,'코미디')">코미디</button>
-<button onclick="check(6,'SF')">SF</button>
-<button onclick="check(6,'역사')">역사</button>
-
-</div>
+<p id="final"></p>
 
 
+<br>
 
 
-<div class="quiz">
+<button class="restart" onclick="restart()">
 
-<h2>7. 영화 '아가씨' 감독은?</h2>
+🔄 다시 하기
 
-<button onclick="check(7,'박찬욱')">박찬욱</button>
-<button onclick="check(7,'김지운')">김지운</button>
-<button onclick="check(7,'나홍진')">나홍진</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>8. 영화 '베테랑'의 주연 배우는?</h2>
-
-<button onclick="check(8,'황정민')">황정민</button>
-<button onclick="check(8,'하정우')">하정우</button>
-<button onclick="check(8,'공유')">공유</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>9. 영화 '괴물' 감독은?</h2>
-
-<button onclick="check(9,'봉준호')">봉준호</button>
-<button onclick="check(9,'박찬욱')">박찬욱</button>
-<button onclick="check(9,'류승완')">류승완</button>
-
-</div>
-
-
-
-
-<div class="quiz">
-
-<h2>10. 아카데미 작품상을 받은 한국 영화는?</h2>
-
-<button onclick="check(10,'기생충')">기생충</button>
-<button onclick="check(10,'밀양')">밀양</button>
-<button onclick="check(10,'설국열차')">설국열차</button>
-
-</div>
-
-
-
-
-<h2 id="score"></h2>
-
-
-<button class="button" onclick="showResult()">
-🏆 결과 확인
 </button>
 
 
 </div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+const quiz=[
+
+{
+q:"영화 '기생충'의 감독은?",
+a:["봉준호","박찬욱","나홍진"],
+c:"봉준호"
+},
+
+{
+q:"영화 '부산행'의 주제는?",
+a:["좀비","우주","전쟁"],
+c:"좀비"
+},
+
+{
+q:"영화 '올드보이'의 감독은?",
+a:["박찬욱","봉준호","류승완"],
+c:"박찬욱"
+},
+
+{
+q:"'범죄도시'의 대표 배우는?",
+a:["마동석","송강호","이병헌"],
+c:"마동석"
+},
+
+{
+q:"영화 '신세계'의 장르는?",
+a:["범죄","공포","애니메이션"],
+c:"범죄"
+},
+
+{
+q:"영화 '극한직업'의 장르는?",
+a:["코미디","SF","역사"],
+c:"코미디"
+},
+
+{
+q:"영화 '아가씨'의 감독은?",
+a:["박찬욱","김지운","나홍진"],
+c:"박찬욱"
+},
+
+{
+q:"영화 '베테랑'의 주연 배우는?",
+a:["황정민","하정우","공유"],
+c:"황정민"
+},
+
+{
+q:"영화 '괴물'의 감독은?",
+a:["봉준호","박찬욱","류승완"],
+c:"봉준호"
+},
+
+{
+q:"아카데미 작품상을 받은 한국 영화는?",
+a:["기생충","밀양","설국열차"],
+c:"기생충"
+}
+
+];
+
+
+let index=0;
+
 let score=0;
 
-let answered=[];
 
 
-let answerList={
+const question=document.getElementById("question");
 
-1:"봉준호",
-2:"좀비",
-3:"박찬욱",
-4:"마동석",
-5:"범죄",
-6:"코미디",
-7:"박찬욱",
-8:"황정민",
-9:"봉준호",
-10:"기생충"
+const answers=document.getElementById("answers");
+
+const number=document.getElementById("number");
+
+const scoreText=document.getElementById("score");
+
+const bar=document.getElementById("bar");
+
+
+
+function load(){
+
+
+number.innerHTML=
+"문제 "+(index+1)+" / 10";
+
+
+question.innerHTML=
+quiz[index].q;
+
+
+answers.innerHTML="";
+
+
+bar.style.width=
+(index/10*100)+"%";
+
+
+
+quiz[index].a.forEach(function(item){
+
+
+let btn=document.createElement("button");
+
+
+btn.innerHTML=item;
+
+btn.className="answer-btn";
+
+
+btn.onclick=function(){
+
+check(btn,item);
 
 };
 
 
+answers.appendChild(btn);
 
-function check(num,value){
 
 
-if(answered[num]){
+});
 
-alert("이미 푼 문제입니다!");
-
-return;
 
 }
 
 
-if(answerList[num]==value){
+
+function check(btn,answer){
+
+
+let buttons=document.querySelectorAll(".answer-btn");
+
+
+buttons.forEach(b=>b.disabled=true);
+
+
+
+if(answer==quiz[index].c){
+
+
+btn.classList.add("correct");
 
 score++;
 
-alert("🎉 정답입니다!");
+scoreText.innerHTML=score;
+
 
 }
-
 
 else{
 
-alert("😢 오답입니다!");
+
+btn.classList.add("wrong");
+
+
+buttons.forEach(function(b){
+
+if(b.innerHTML==quiz[index].c){
+
+b.classList.add("correct");
+
+}
+
+});
+
 
 }
 
 
 
-answered[num]=true;
+setTimeout(function(){
+
+
+index++;
+
+
+if(index<quiz.length){
+
+load();
+
+}
+
+else{
+
+finish();
+
+}
+
+
+},1000);
+
 
 
 }
 
 
 
-function showResult(){
+function finish(){
+
+
+document.getElementById("quiz").style.display="none";
 
 
 let grade;
@@ -237,46 +601,46 @@ grade="🎞 초보 관객";
 
 
 
-document.getElementById("score").innerHTML=
-
-"점수 : "+score+" / 10<br>"+grade;
+document.getElementById("result").style.display="block";
 
 
-}
-.quiz{
+document.getElementById("final").innerHTML=
 
-animation:fade 0.8s;
+"점수 : "+score+" / 10<br><br>"+grade;
+
 
 }
 
 
-@keyframes fade{
 
-from{
+function restart(){
 
-opacity:0;
 
-transform:translateY(30px);
+index=0;
+
+score=0;
+
+scoreText.innerHTML=0;
+
+
+document.getElementById("quiz").style.display="block";
+
+document.getElementById("result").style.display="none";
+
+
+load();
+
 
 }
 
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
 
 
-.quiz:hover{
+load();
 
-box-shadow:0 0 40px gold;
 
-transform:scale(1.03);
+</script>
 
-transition:.3s;
 
-}
+</body>
+
+</html>
