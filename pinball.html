@@ -1,444 +1,256 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
-<meta charset="UTF-8">
-<title>PINBALL GAME</title>
-
-
-<style>
-
-body{
-
-margin:0;
-
-background:#111;
-
-color:white;
-
-text-align:center;
-
-font-family:Arial;
-
-}
-
-
-
-h1{
-
-color:gold;
-
-font-size:45px;
-
-text-shadow:0 0 20px gold;
-
-}
-
-
-
-#game{
-
-position:relative;
-
-margin:auto;
-
-width:400px;
-
-height:700px;
-
-background-image:url("pinball.jpg");
-
-background-size:cover;
-
-background-position:center;
-
-border:10px solid #8b5a2b;
-
-border-radius:20px;
-
-overflow:hidden;
-
-box-shadow:0 0 40px black;
-
-}
-
-
-
-/* 공 */
-
-#ball{
-
-position:absolute;
-
-width:20px;
-
-height:20px;
-
-background:white;
-
-border-radius:50%;
-
-box-shadow:0 0 15px white;
-
-}
-
-
-
-/* 플리퍼 */
-
-.flipper{
-
-position:absolute;
-
-width:90px;
-
-height:20px;
-
-background:#ffd700;
-
-border-radius:20px;
-
-bottom:50px;
-
-}
-
-
-
-#left{
-
-left:70px;
-
-}
-
-
-
-#right{
-
-right:70px;
-
-}
-
-
-
-#score{
-
-font-size:30px;
-
-color:#ffd700;
-
-}
-
-
-
-button{
-
-padding:15px 30px;
-
-font-size:20px;
-
-border-radius:20px;
-
-background:gold;
-
-border:none;
-
-cursor:pointer;
-
-}
-
-
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USGS Magnitude 2.5+ Earthquakes, Past Day</title>
+  
+  <!-- Leaflet.js CSS & JS (지도 오픈소스 라이브러리) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      color: #333;
+    }
+
+    /* 좌측 사이드바 스타일링 */
+    #sidebar {
+      width: 320px;
+      min-width: 320px;
+      height: 100%;
+      background-color: #f7f7f7;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+
+    .header-container {
+      padding: 16px;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .count-text {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .filter-options {
+      font-size: 0.85rem;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* 지진 리스트 영역 */
+    #eq-list {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .eq-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e8e8e8;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .eq-item:hover {
+      background-color: #eaeaea;
+    }
+
+    .eq-mag {
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 45px;
+      text-align: left;
+      color: #222;
+    }
+
+    .eq-details {
+      flex: 1;
+    }
+
+    .eq-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 2px;
+    }
+
+    .eq-meta {
+      font-size: 0.75rem;
+      color: #777;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* 우측 지도 스타일링 */
+    #map {
+      flex: 1;
+      height: 100%;
+      background-color: #d8dadc;
+    }
+
+    /* 커스텀 Leaflet 컨트롤 버튼 디자인 */
+    .leaflet-control-zoom {
+      border: none !important;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3) !important;
+    }
+  </style>
 </head>
-
-
 <body>
 
-
-<h1>🎱 PINBALL GAME</h1>
-
-
-<div id="score">
-
-점수 : 0
-
-</div>
-
-
-<br>
-
-
-<div id="game">
-
-
-<div id="ball"></div>
-
-
-<div class="flipper" id="left"></div>
-
-<div class="flipper" id="right"></div>
-
-
-</div>
-
-
-<br>
-
-
-<button onclick="startGame()">
-
-게임 시작
-
-</button>
-
-
-
-<script>
-
-
-let ball=document.getElementById("ball");
-
-let game=document.getElementById("game");
-
-let scoreText=document.getElementById("score");
-
-
-let x=190;
-
-let y=50;
-
-
-let dx=3;
-
-let dy=4;
-
-
-let score=0;
-
-
-let playing=false;
-
-
-
-let leftPower=false;
-
-let rightPower=false;
-
-
-
-let left=document.getElementById("left");
-
-let right=document.getElementById("right");
-
-
-
-
-document.addEventListener("keydown",function(e){
-
-
-if(e.key=="ArrowLeft"){
-
-left.style.transform="rotate(-40deg)";
-
-leftPower=true;
-
-}
-
-
-if(e.key=="ArrowRight"){
-
-right.style.transform="rotate(40deg)";
-
-rightPower=true;
-
-}
-
-
-
-});
-
-
-
-document.addEventListener("keyup",function(e){
-
-
-if(e.key=="ArrowLeft"){
-
-left.style.transform="rotate(0deg)";
-
-leftPower=false;
-
-}
-
-
-if(e.key=="ArrowRight"){
-
-right.style.transform="rotate(0deg)";
-
-rightPower=false;
-
-}
-
-
-});
-
-
-
-
-
-
-function startGame(){
-
-playing=true;
-
-score=0;
-
-x=190;
-
-y=50;
-
-loop();
-
-}
-
-
-
-
-function loop(){
-
-
-if(!playing)return;
-
-
-
-x+=dx;
-
-y+=dy;
-
-
-
-// 벽 충돌
-
-if(x<=0 || x>=380){
-
-dx=-dx;
-
-score+=10;
-
-}
-
-
-
-if(y<=0){
-
-dy=-dy;
-
-score+=10;
-
-}
-
-
-
-
-// 아래로 떨어짐
-
-if(y>680){
-
-playing=false;
-
-alert(
-"게임 종료!\n점수 : "+score
-);
-
-}
-
-
-
-
-// 플리퍼 충돌
-
-let ballBottom=y+20;
-
-
-
-if(
-
-ballBottom>620 &&
-
-x>70 &&
-
-x<160 &&
-
-leftPower
-
-){
-
-dy=-8;
-
-score+=50;
-
-}
-
-
-
-if(
-
-ballBottom>620 &&
-
-x>240 &&
-
-x<330 &&
-
-rightPower
-
-){
-
-dy=-8;
-
-score+=50;
-
-}
-
-
-
-
-
-// 랜덤 범퍼 효과
-
-if(Math.random()<0.01){
-
-dx=-dx;
-
-dy=-dy;
-
-score+=100;
-
-}
-
-
-
-ball.style.left=x+"px";
-
-ball.style.top=y+"px";
-
-
-scoreText.innerHTML=
-
-"점수 : "+score;
-
-
-
-requestAnimationFrame(loop);
-
-
-}
-
-
-</script>
-
-
+  <!-- 좌측 USGS 지진 정보 사이드바 -->
+  <div id="sidebar">
+    <div class="header-container">
+      <h1>USGS Magnitude 2.5+ Earthquakes, Past Day</h1>
+      <div class="count-text" id="eq-count">로딩 중...</div>
+      <div class="filter-options">
+        <input type="checkbox" id="map-bounds-only">
+        <label for="map-bounds-only">Only List Earthquakes Shown on Map</label>
+      </div>
+    </div>
+    
+    <div class="sort-bar">
+      <span>Format: Magnitude</span>
+      <span>Sort: Newest First</span>
+    </div>
+
+    <ul id="eq-list"></ul>
+  </div>
+
+  <!-- 우측 지도 영역 -->
+  <div id="map"></div>
+
+  <script>
+    // 1. 지도 초기화 (이미지와 유사하게 회색조 타일 세팅)
+    const map = L.map('map', {
+      center: [20, 0],
+      zoom: 2,
+      zoomControl: true
+    });
+
+    // 회색조 깔끔한 베이스맵 레이어 (CartoDB Positron 사용)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    let earthquakeMarkers = [];
+
+    // 2. 판 경계선 (Tectonic Plates) 로드 및 빨간 선으로 그리기
+    fetch('https://raw.githubusercontent.com/fraixedes/tectonicplates/master/GeoJSON/PB2002_boundaries.json')
+      .then(res => res.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: {
+            color: '#ff2222',
+            weight: 2,
+            opacity: 0.8
+          }
+        }).addTo(map);
+      })
+      .catch(err => console.error("판 경계 데이터를 불러오는 데 실패했습니다:", err));
+
+    // 3. USGS 실시간 지진 API 데이터 가져오기 (Past Day M2.5+)
+    const USGS_API_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson';
+
+    fetch(USGS_API_URL)
+      .then(res => res.json())
+      .then(data => {
+        const features = data.features;
+        document.getElementById('eq-count').textContent = `${features.length} earthquakes.`;
+
+        const listContainer = document.getElementById('eq-list');
+
+        features.forEach(eq => {
+          const mag = eq.properties.mag.toFixed(1);
+          const place = eq.properties.place;
+          const time = new Date(eq.properties.time).toISOString().replace('T', ' ').substring(0, 19) + ' (UTC)';
+          const depth = eq.geometry.coordinates[2].toFixed(1) + ' km';
+          const [lon, lat] = eq.geometry.coordinates;
+
+          // (1) 지도 위에 주황색 원형 마커 생성
+          const marker = L.circleMarker([lat, lon], {
+            radius: Math.max(mag * 2, 4),
+            fillColor: '#ff9800',
+            color: '#e65100',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.85
+          }).addTo(map);
+
+          marker.bindPopup(`
+            <b>${place}</b><br>
+            규모: <b>${mag}</b><br>
+            시간: ${time}<br>
+            깊이: ${depth}
+          `);
+
+          earthquakeMarkers.push({ marker, lat, lon });
+
+          // (2) 좌측 사이드바 리스트 아이템 생성
+          const li = document.createElement('li');
+          li.className = 'eq-item';
+          li.innerHTML = `
+            <div class="eq-mag">${mag}</div>
+            <div class="eq-details">
+              <div class="eq-title">${place}</div>
+              <div class="eq-meta">
+                <span>${time}</span>
+                <span>${depth}</span>
+              </div>
+            </div>
+          `;
+
+          // 클릭 시 해당 지진 위치로 지도 이동 및 팝업 표시
+          li.addEventListener('click', () => {
+            map.setView([lat, lon], 6, { animate: true });
+            marker.openPopup();
+          });
+
+          listContainer.appendChild(li);
+        });
+      })
+      .catch(err => console.error("USGS 지진 데이터를 불러오는 데 실패했습니다:", err));
+  </script>
 </body>
-
 </html>
