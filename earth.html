@@ -1,294 +1,244 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
-<meta charset="UTF-8">
-<title>EARTHQUAKE MODEL</title>
-
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-
-body{
-
-background:#111;
-
-color:white;
-
-font-family:Arial;
-
-text-align:center;
-
-}
-
-
-
-h1{
-
-margin:30px;
-
-color:#ffd700;
-
-font-size:50px;
-
-text-shadow:0 0 20px gold;
-
-}
-
-
-
-/* 지도 */
-
-#map{
-
-position:relative;
-
-margin:auto;
-
-width:90%;
-
-max-width:1200px;
-
-height:650px;
-
-
-background:
-
-linear-gradient(
-rgba(220,225,230,.8),
-rgba(180,190,200,.8)
-),
-
-url("earth.jpg");
-
-
-background-size:cover;
-
-background-position:center;
-
-
-border:5px solid #555;
-
-overflow:hidden;
-
-box-shadow:0 0 40px black;
-
-}
-
-
-
-/* 지진 표시 */
-
-.earthquake{
-
-position:absolute;
-
-width:20px;
-
-height:20px;
-
-background:#ff6600;
-
-border-radius:50%;
-
-box-shadow:
-
-0 0 10px red;
-
-
-animation:pulse 1.5s infinite;
-
-}
-
-
-
-@keyframes pulse{
-
-
-0%{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-
-100%{
-
-transform:scale(3);
-
-opacity:0;
-
-}
-
-
-}
-
-
-
-
-.info{
-
-margin:20px;
-
-font-size:25px;
-
-color:#ffd700;
-
-}
-
-
-
-button{
-
-
-padding:15px 40px;
-
-border:none;
-
-border-radius:30px;
-
-background:#ffd700;
-
-font-size:20px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-
-button:hover{
-
-background:white;
-
-transform:scale(1.1);
-
-}
-
-
-
-</style>
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USGS Magnitude 2.5+ Earthquakes, Past Day</title>
+  
+  <!-- Leaflet.js CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+    }
+
+    /* 사이드바 */
+    #sidebar {
+      width: 320px;
+      min-width: 320px;
+      height: 100%;
+      background-color: #f7f7f7;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .header-container {
+      padding: 16px;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .count-text {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .filter-options {
+      font-size: 0.85rem;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: #eee;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    #eq-list {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .eq-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e8e8e8;
+      cursor: pointer;
+    }
+
+    .eq-item:hover {
+      background-color: #eaeaea;
+    }
+
+    .eq-mag {
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 45px;
+      color: #222;
+    }
+
+    .eq-details {
+      flex: 1;
+    }
+
+    .eq-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 2px;
+    }
+
+    .eq-meta {
+      font-size: 0.75rem;
+      color: #777;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* 지도 영억 필수 스타일 설정 */
+    #map {
+      flex: 1;
+      height: 100vh;
+      width: 100%;
+      background-color: #e5e3df; /* 기본 지도 배경색 */
+    }
+  </style>
 </head>
-
-
-
 <body>
 
-
-<h1>
-🌍 EARTHQUAKE MODEL
-</h1>
-
-
-
-<div class="info">
-
-현재 발생한 지진 : <span id="count">0</span>
-
-</div>
-
-
-
-<div id="map">
-
-
-</div>
-
-
-<br>
-
-
-<button onclick="startEarthquake()">
-
-🌋 지진 발생 시뮬레이션
-
-</button>
-
-
-
-<script>
-
-
-
-let map=document.getElementById("map");
-
-let count=0;
-
-
-
-function startEarthquake(){
-
-
-let quake=document.createElement("div");
-
-
-quake.className="earthquake";
-
-
-
-let x=Math.random()*90;
-
-let y=Math.random()*85;
-
-
-
-quake.style.left=x+"%";
-
-quake.style.top=y+"%";
-
-
-
-let size=Math.random()*30+15;
-
-
-quake.style.width=size+"px";
-
-quake.style.height=size+"px";
-
-
-
-map.appendChild(quake);
-
-
-
-count++;
-
-
-document.getElementById("count").innerHTML=count;
-
-
-
-setTimeout(()=>{
-
-
-quake.remove();
-
-
-},3000);
-
-
-
-}
-
-
-
-
-</script>
-
-
-
+  <div id="sidebar">
+    <div class="header-container">
+      <h1>USGS Magnitude 2.5+ Earthquakes, Past Day</h1>
+      <div class="count-text" id="eq-count">로딩 중...</div>
+      <div class="filter-options">
+        <input type="checkbox" id="map-bounds-only">
+        <label for="map-bounds-only">Only List Earthquakes Shown on Map</label>
+      </div>
+    </div>
+    
+    <div class="sort-bar">
+      <span>Format: Magnitude</span>
+      <span>Sort: Newest First</span>
+    </div>
+
+    <ul id="eq-list"></ul>
+  </div>
+
+  <div id="map"></div>
+
+  <script>
+    // 페이지 완전히 로드된 후 실행
+    window.addEventListener('load', () => {
+      // 1. 지도 초기화
+      const map = L.map('map').setView([20, 0], 2);
+
+      // 표준 OpenStreetMap 타일 (가장 안정적임)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      // 지도 레이아웃 강제 업데이트 (점이 안 떠다니고 지도가 깨지는 것 방지)
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 200);
+
+      // 2. 판 경계선 로드
+      fetch('https://raw.githubusercontent.com/fraixedes/tectonicplates/master/GeoJSON/PB2002_boundaries.json')
+        .then(res => res.json())
+        .then(data => {
+          L.geoJSON(data, {
+            style: {
+              color: '#ff2222',
+              weight: 2,
+              opacity: 0.8
+            }
+          }).addTo(map);
+        })
+        .catch(err => console.error("판 경계선 오류:", err));
+
+      // 3. USGS 지진 데이터 로드
+      fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
+        .then(res => res.json())
+        .then(data => {
+          const features = data.features;
+          document.getElementById('eq-count').textContent = `${features.length} earthquakes.`;
+
+          const listContainer = document.getElementById('eq-list');
+
+          features.forEach(eq => {
+            const mag = eq.properties.mag.toFixed(1);
+            const place = eq.properties.place;
+            const time = new Date(eq.properties.time).toISOString().replace('T', ' ').substring(0, 19) + ' (UTC)';
+            const depth = eq.geometry.coordinates[2].toFixed(1) + ' km';
+            const [lon, lat] = eq.geometry.coordinates;
+
+            // 지도 마커 생성
+            const marker = L.circleMarker([lat, lon], {
+              radius: Math.max(mag * 2, 4),
+              fillColor: '#ff9800',
+              color: '#e65100',
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.85
+            }).addTo(map);
+
+            marker.bindPopup(`
+              <b>${place}</b><br>
+              규모: <b>${mag}</b><br>
+              시간: ${time}<br>
+              깊이: ${depth}
+            `);
+
+            // 사이드바 목록 생성
+            const li = document.createElement('li');
+            li.className = 'eq-item';
+            li.innerHTML = `
+              <div class="eq-mag">${mag}</div>
+              <div class="eq-details">
+                <div class="eq-title">${place}</div>
+                <div class="eq-meta">
+                  <span>${time}</span>
+                  <span>${depth}</span>
+                </div>
+              </div>
+            `;
+
+            li.addEventListener('click', () => {
+              map.setView([lat, lon], 6, { animate: true });
+              marker.openPopup();
+            });
+
+            listContainer.appendChild(li);
+          });
+        })
+        .catch(err => console.error("지진 데이터 오류:", err));
+    });
+  </script>
 </body>
-
 </html>
