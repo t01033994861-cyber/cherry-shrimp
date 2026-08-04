@@ -147,3 +147,99 @@
 
 
 </div>
+let score=0;
+
+let answered=[];
+
+
+let answerList={
+
+1:"봉준호",
+2:"좀비",
+3:"박찬욱",
+4:"마동석",
+5:"범죄",
+6:"코미디",
+7:"박찬욱",
+8:"황정민",
+9:"봉준호",
+10:"기생충"
+
+};
+
+
+
+function check(num,value){
+
+
+if(answered[num]){
+
+alert("이미 푼 문제입니다!");
+
+return;
+
+}
+
+
+if(answerList[num]==value){
+
+score++;
+
+alert("🎉 정답입니다!");
+
+}
+
+
+else{
+
+alert("😢 오답입니다!");
+
+}
+
+
+
+answered[num]=true;
+
+
+}
+
+
+
+function showResult(){
+
+
+let grade;
+
+
+if(score==10){
+
+grade="🏆 한국 영화 마스터";
+
+}
+
+else if(score>=7){
+
+grade="⭐ 영화 전문가";
+
+}
+
+else if(score>=4){
+
+grade="🎬 영화 팬";
+
+}
+
+else{
+
+grade="🎞 초보 관객";
+
+}
+
+
+
+document.getElementById("score").innerHTML=
+
+"점수 : "+score+" / 10<br>"+grade;
+
+
+}
