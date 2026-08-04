@@ -1,1 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+
+<meta charset="UTF-8">
+<title>PINBALL GAME</title>
+
+
+<style>
+
+body{
+
+margin:0;
+
+background:#111;
+
+color:white;
+
+text-align:center;
+
+font-family:Arial;
+
+}
+
+
+
+h1{
+
+color:gold;
+
+font-size:45px;
+
+text-shadow:0 0 20px gold;
+
+}
+
+
+
+#game{
+
+position:relative;
+
+margin:auto;
+
+width:400px;
+
+height:700px;
+
+background-image:url("pinball.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+border:10px solid #8b5a2b;
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:0 0 40px black;
+
+}
+
+
+
+/* 공 */
+
+#ball{
+
+position:absolute;
+
+width:20px;
+
+height:20px;
+
+background:white;
+
+border-radius:50%;
+
+box-shadow:0 0 15px white;
+
+}
+
+
+
+/* 플리퍼 */
+
+.flipper{
+
+position:absolute;
+
+width:90px;
+
+height:20px;
+
+background:#ffd700;
+
+border-radius:20px;
+
+bottom:50px;
+
+}
+
+
+
+#left{
+
+left:70px;
+
+}
+
+
+
+#right{
+
+right:70px;
+
+}
+
+
+
+#score{
+
+font-size:30px;
+
+color:#ffd700;
+
+}
+
+
+
+button{
+
+padding:15px 30px;
+
+font-size:20px;
+
+border-radius:20px;
+
+background:gold;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>🎱 PINBALL GAME</h1>
+
+
+<div id="score">
+
+점수 : 0
+
+</div>
+
+
+<br>
+
+
+<div id="game">
+
+
+<div id="ball"></div>
+
+
+<div class="flipper" id="left"></div>
+
+<div class="flipper" id="right"></div>
+
+
+</div>
+
+
+<br>
+
+
+<button onclick="startGame()">
+
+게임 시작
+
+</button>
+
+
+
+<script>
+
+
+let ball=document.getElementById("ball");
+
+let game=document.getElementById("game");
+
+let scoreText=document.getElementById("score");
+
+
+let x=190;
+
+let y=50;
+
+
+let dx=3;
+
+let dy=4;
+
+
+let score=0;
+
+
+let playing=false;
+
+
+
+let leftPower=false;
+
+let rightPower=false;
+
+
+
+let left=document.getElementById("left");
+
+let right=document.getElementById("right");
+
+
+
+
+document.addEventListener("keydown",function(e){
+
+
+if(e.key=="ArrowLeft"){
+
+left.style.transform="rotate(-40deg)";
+
+leftPower=true;
+
+}
+
+
+if(e.key=="ArrowRight"){
+
+right.style.transform="rotate(40deg)";
+
+rightPower=true;
+
+}
+
+
+
+});
+
+
+
+document.addEventListener("keyup",function(e){
+
+
+if(e.key=="ArrowLeft"){
+
+left.style.transform="rotate(0deg)";
+
+leftPower=false;
+
+}
+
+
+if(e.key=="ArrowRight"){
+
+right.style.transform="rotate(0deg)";
+
+rightPower=false;
+
+}
+
+
+});
+
+
+
+
+
+
+function startGame(){
+
+playing=true;
+
+score=0;
+
+x=190;
+
+y=50;
+
+loop();
+
+}
+
+
+
+
+function loop(){
+
+
+if(!playing)return;
+
+
+
+x+=dx;
+
+y+=dy;
+
+
+
+// 벽 충돌
+
+if(x<=0 || x>=380){
+
+dx=-dx;
+
+score+=10;
+
+}
+
+
+
+if(y<=0){
+
+dy=-dy;
+
+score+=10;
+
+}
+
+
+
+
+// 아래로 떨어짐
+
+if(y>680){
+
+playing=false;
+
+alert(
+"게임 종료!\n점수 : "+score
+);
+
+}
+
+
+
+
+// 플리퍼 충돌
+
+let ballBottom=y+20;
+
+
+
+if(
+
+ballBottom>620 &&
+
+x>70 &&
+
+x<160 &&
+
+leftPower
+
+){
+
+dy=-8;
+
+score+=50;
+
+}
+
+
+
+if(
+
+ballBottom>620 &&
+
+x>240 &&
+
+x<330 &&
+
+rightPower
+
+){
+
+dy=-8;
+
+score+=50;
+
+}
+
+
+
+
+
+// 랜덤 범퍼 효과
+
+if(Math.random()<0.01){
+
+dx=-dx;
+
+dy=-dy;
+
+score+=100;
+
+}
+
+
+
+ball.style.left=x+"px";
+
+ball.style.top=y+"px";
+
+
+scoreText.innerHTML=
+
+"점수 : "+score;
+
+
+
+requestAnimationFrame(loop);
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
